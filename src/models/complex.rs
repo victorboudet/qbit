@@ -13,6 +13,9 @@ impl Complex {
     pub fn conjugate(self) -> Complex {
         Complex::new(self.real, -self.imag)
     }
+    pub fn magnitude(&self) -> f64 {
+        (self.real * self.real + self.imag * self.imag).sqrt()
+    }
     pub fn dump(&self) {
         if self.imag < 0.0 {
             println!("{} - {}i", self.real, -self.imag);
