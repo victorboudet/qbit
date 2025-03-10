@@ -1,4 +1,4 @@
-use std::ops;
+use std::{f64::consts::PI, ops};
 
 #[derive(Debug)]
 pub struct Complex {
@@ -15,6 +15,19 @@ impl Complex {
     }
     pub fn magnitude(&self) -> f64 {
         (self.real * self.real + self.imag * self.imag).sqrt()
+    }
+    pub fn theta(&self) -> f64 {
+        if self.real == 0.0 {
+            if self.imag > 0.0 {
+                return PI / 2.0;
+
+            }
+            if self.imag < 0.0 {
+                return -PI / 2.0;
+            }
+            return 0.0;
+        }
+        (self.real/self.imag).atan()
     }
     pub fn dump(&self) {
         if self.imag < 0.0 {
