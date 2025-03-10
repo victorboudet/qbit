@@ -10,10 +10,10 @@ impl Complex {
     pub fn new(real: f64, imag: f64) -> Self {
         Self { real, imag }
     }
-    pub fn conjugate(&mut self) {
-        self.imag = -self.imag;
+    pub fn conjugate(self) -> Complex {
+        Complex::new(self.real, -self.imag)
     }
-    pub fn dump(self) {
+    pub fn dump(&self) {
         if self.imag < 0.0 {
             println!("{} - {}i", self.real, -self.imag);
         } else {
