@@ -10,6 +10,9 @@ impl Complex {
     pub fn new(real: f64, imag: f64) -> Self {
         Self { real, imag }
     }
+    pub fn conjugate(&mut self) {
+        self.imag = -self.imag;
+    }
 }
 
 impl ops::Add for Complex {
