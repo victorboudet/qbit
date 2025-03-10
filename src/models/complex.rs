@@ -13,6 +13,13 @@ impl Complex {
     pub fn conjugate(&mut self) {
         self.imag = -self.imag;
     }
+    pub fn dump(self) {
+        if self.imag < 0.0 {
+            println!("{} - {}i", self.real, -self.imag);
+        } else {
+            println!("{} + {}i", self.real, self.imag);
+        }
+    }
 }
 
 impl ops::Add for Complex {

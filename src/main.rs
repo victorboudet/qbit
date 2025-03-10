@@ -7,5 +7,5 @@ fn main() {
     let c2: Complex = Complex::new(2.3, 1.2);
     let mut c3: Complex = c1 + c2 + 2.3;
     c3.conjugate();
-    println!("{:?}", c3);
+    c3.dump();
 }
