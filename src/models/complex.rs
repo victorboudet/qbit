@@ -20,14 +20,13 @@ impl Complex {
         if self.real == 0.0 {
             if self.imag > 0.0 {
                 return PI / 2.0;
-
             }
             if self.imag < 0.0 {
                 return -PI / 2.0;
             }
             return 0.0;
         }
-        (self.real/self.imag).atan()
+        (self.real / self.imag).atan()
     }
     pub fn dump(&self) {
         if self.imag < 0.0 {
@@ -57,5 +56,54 @@ impl ops::Add<f64> for Complex {
             real: self.real + other as f64,
             imag: self.imag,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn new() {
+        let c = Complex::new(3.0, 4.0);
+        assert_eq!(c.real, 3.0);
+        assert_eq!(c.imag, 4.0);
+    }
+
+    #[test]
+    fn conjugate() {
+        let c = Complex::new(3.0, 4.0);
+        let conj = c.conjugate();
+        assert_eq!(conj.real, 3.0);
+        assert_eq!(conj.imag, -4.0);
+    }
+
+    #[test]
+    fn magnitude() {
+        let c = Complex::new(3.0, 4.0);
+        assert_eq!(c.magnitude(), 5.0);
+    }
+
+    #[test]
+    fn theta() {
+        let c = Complex::new(0.0, 1.0);
+        assert_eq!(c.theta(), PI / 2.0);
+    }
+
+    #[test]
+    fn add_complex() {
+        let c1 = Complex::new(1.0, 2.0);
+        let c2 = Complex::new(3.0, 4.0);
+        let result = c1 + c2;
+        assert_eq!(result.real, 4.0);
+        assert_eq!(result.imag, 6.0);
+    }
+
+    #[test]
+    fn add_f64() {
+        let c = Complex::new(1.0, 2.0);
+        let result = c + 3.0;
+        assert_eq!(result.real, 4.0);
+        assert_eq!(result.imag, 2.0);
     }
 }
