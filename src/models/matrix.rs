@@ -1,3 +1,5 @@
+use std::ops;
+
 use super::matrix_allowed::MatrixAllowed as Allowed;
 
 #[derive(Debug)]
@@ -22,6 +24,25 @@ impl Matrix {
             print!("{} ", self.numbers[i]);
         }
         println!();
+    }
+}
+
+impl ops::Add<Matrix> for Matrix {
+    type Output = Result<Matrix, String>;
+
+    fn add(self, other: Matrix) -> Result<Matrix, String> {
+        if self.m != other.m || self.n != other.n {
+            return Err("Matrix dimensions are not the sames".to_string());
+        }
+        let mut numbers = vec![];
+        for i in 0..self.n * self.m {
+            numbers.push(todo!());
+        }
+        Ok(Matrix {
+            n: self.n,
+            m: self.m,
+            numbers,
+        })
     }
 }
 
