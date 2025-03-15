@@ -1,4 +1,4 @@
-use std::{f64::consts::PI, ops};
+use std::ops;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Complex {
@@ -17,16 +17,7 @@ impl Complex {
         (self.real * self.real + self.imag * self.imag).sqrt()
     }
     pub fn theta(&self) -> f64 {
-        if self.real == 0.0 {
-            if self.imag > 0.0 {
-                return PI / 2.0;
-            }
-            if self.imag < 0.0 {
-                return -PI / 2.0;
-            }
-            return 0.0;
-        }
-        (self.real / self.imag).atan()
+        (self.imag / self.real).atan()
     }
     pub fn dump(&self) {
         if self.imag < 0.0 {
@@ -71,6 +62,8 @@ impl ops::Mul for Complex {
 
 #[cfg(test)]
 mod tests {
+    use std::f64::consts::PI;
+
     use super::*;
 
     #[test]
@@ -96,8 +89,12 @@ mod tests {
 
     #[test]
     fn theta() {
+        let c = Complex::new(1.0, 1.0);
+        assert_eq!(c.theta(), PI / 4.0);
         let c = Complex::new(0.0, 1.0);
         assert_eq!(c.theta(), PI / 2.0);
+        let c = Complex::new(1.0, 0.0);
+        assert_eq!(c.theta(), 0.0)
     }
 
     #[test]
