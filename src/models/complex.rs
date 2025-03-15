@@ -1,6 +1,6 @@
 use std::{f64::consts::PI, ops};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Complex {
     pub real: f64,
     pub imag: f64,
@@ -124,5 +124,13 @@ mod tests {
         let res = c1 * c2;
         assert_eq!(res.real, 32.0);
         assert_eq!(res.imag, -4.0)
+    }
+    #[test]
+    fn mul_conjugate() {
+        let c1 = Complex::new(2.0, 3.0);
+        let c2 = c1.clone().conjugate();
+        let res = c1 * c2;
+        assert_eq!(res.real, 13.0);
+        assert_eq!(res.imag, 0.0)
     }
 }
