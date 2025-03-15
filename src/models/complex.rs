@@ -59,6 +59,16 @@ impl ops::Add<f64> for Complex {
     }
 }
 
+impl ops::Mul for Complex {
+    type Output = Complex;
+    fn mul(self, other: Complex) -> Complex {
+        Complex {
+            real: self.real * other.real - self.imag * other.imag,
+            imag: self.real * other.imag + other.real * self.imag,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -105,5 +115,14 @@ mod tests {
         let result = c + 3.0;
         assert_eq!(result.real, 4.0);
         assert_eq!(result.imag, 2.0);
+    }
+
+    #[test]
+    fn mul() {
+        let c1 = Complex::new(2.0, 3.0);
+        let c2 = Complex::new(4.0, -8.0);
+        let res = c1 * c2;
+        assert_eq!(res.real, 32.0);
+        assert_eq!(res.imag, -4.0)
     }
 }
