@@ -1,4 +1,4 @@
-use std::ops;
+use std::{fmt, ops};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Complex {
@@ -57,6 +57,12 @@ impl ops::Mul for Complex {
             real: self.real * other.real - self.imag * other.imag,
             imag: self.real * other.imag + other.real * self.imag,
         }
+    }
+}
+
+impl fmt::Display for Complex {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{} + {}i", self.real, self.imag)
     }
 }
 
