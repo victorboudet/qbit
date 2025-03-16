@@ -17,6 +17,10 @@ impl Matrix {
         Ok(Self { n, m, numbers })
     }
     pub fn dump(&self) {
+        if self.numbers.is_empty() {
+            println!("Empty matrix");
+            return;
+        }
         for i in 0..self.n * self.m {
             if i % self.n == 0 {
                 println!();
@@ -41,6 +45,35 @@ impl ops::Add<Matrix> for Matrix {
         Ok(Matrix {
             n: self.n,
             m: self.m,
+            numbers,
+        })
+    }
+}
+
+impl ops::Mul for Matrix {
+    type Output = Result<Matrix, String>;
+
+    fn mul(self, other: Matrix) -> Result<Matrix, String> {
+        if self.m != other.n {
+            return Err("Undefined".to_string());
+        }
+        let mut numbers = vec![];
+        for i in 0..self.n {
+            for j in 0..other.m {
+                let mut vec = vec![];
+                let mut res = Complex::from_float(0.0);
+                for k in 0..self.m {
+                    vec.push(self.numbers[i * self.m + k]);
+                }
+                for k in 0..other.n {
+                    res = vec[k] * other.numbers[k * other.m + j] + res;
+                }
+                numbers.push(res);
+            }
+        }
+        Ok(Matrix {
+            n: self.n,
+            m: other.m,
             numbers,
         })
     }
@@ -72,5 +105,37 @@ mod tests {
                 assert!(false);
             }
         }
+    }
+
+    #[test]
+    fn mul_two_matrices() {
+        let m1 = Matrix::new(
+            2,
+            3,
+            vec![
+                Complex::from_float(1.0),
+                Complex::from_float(2.0),
+                Complex::from_float(3.0),
+                Complex::from_float(4.0),
+                Complex::from_float(5.0),
+                Complex::from_float(6.0),
+            ],
+        )
+        .expect("It should work");
+        let m2 = Matrix::new(
+            3,
+            2,
+            vec![
+                Complex::from_float(7.0),
+                Complex::from_float(8.0),
+                Complex::from_float(9.0),
+                Complex::from_float(10.0),
+                Complex::from_float(11.0),
+                Complex::from_float(12.0),
+            ],
+        )
+        .expect("It will work");
+        let m3 = (m2 * m1).expect("It should be ok");
+        m3.dump();
     }
 }
