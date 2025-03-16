@@ -50,6 +50,22 @@ impl ops::Add<Matrix> for Matrix {
     }
 }
 
+impl ops::Mul<Matrix> for f64 {
+    type Output = Matrix;
+
+    fn mul(self, other: Matrix) -> Matrix {
+        let mut numbers = vec![];
+        for i in other.numbers {
+            numbers.push(i * Complex::from_float(self));
+        }
+        Matrix {
+            n: other.n,
+            m: other.m,
+            numbers,
+        }
+    }
+}
+
 impl ops::Mul for Matrix {
     type Output = Result<Matrix, String>;
 
@@ -136,5 +152,29 @@ mod tests {
         assert_eq!(m3.numbers[1], Complex::from_float(64.0));
         assert_eq!(m3.numbers[2], Complex::from_float(139.0));
         assert_eq!(m3.numbers[3], Complex::from_float(154.0));
+    }
+
+    #[test]
+    fn mul_matrix_by_factor() {
+        let m = Matrix::new(
+            3,
+            2,
+            vec![
+                Complex::from_float(7.0),
+                Complex::from_float(8.0),
+                Complex::from_float(9.0),
+                Complex::from_float(10.0),
+                Complex::from_float(11.0),
+                Complex::from_float(12.0),
+            ],
+        )
+        .expect("It should work");
+        let m1 = 2.0 * m;
+        assert_eq!(m1.numbers[0], Complex::from_float(14.0));
+        assert_eq!(m1.numbers[1], Complex::from_float(16.0));
+        assert_eq!(m1.numbers[2], Complex::from_float(18.0));
+        assert_eq!(m1.numbers[3], Complex::from_float(20.0));
+        assert_eq!(m1.numbers[4], Complex::from_float(22.0));
+        assert_eq!(m1.numbers[5], Complex::from_float(24.0));
     }
 }
