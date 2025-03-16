@@ -38,6 +38,15 @@ impl ops::Add for Complex {
     }
 }
 
+impl PartialEq<Complex> for Complex {
+    fn eq(&self, other: &Complex) -> bool {
+        if self.real == other.real && self.imag == other.imag {
+            return true;
+        }
+        false
+    }
+}
+
 impl ops::Add<f64> for Complex {
     type Output = Complex;
 

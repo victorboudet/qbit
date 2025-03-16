@@ -132,6 +132,9 @@ mod tests {
         )
         .expect("It will work");
         let m3 = (m1 * m2).expect("It should be ok");
-        m3.dump();
+        assert_eq!(m3.numbers[0], Complex::from_float(58.0));
+        assert_eq!(m3.numbers[1], Complex::from_float(64.0));
+        assert_eq!(m3.numbers[2], Complex::from_float(139.0));
+        assert_eq!(m3.numbers[3], Complex::from_float(154.0));
     }
 }
