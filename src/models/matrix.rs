@@ -2,7 +2,7 @@ use std::ops;
 
 use super::complex::Complex;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Matrix {
     pub m: usize,
     pub n: usize,
@@ -45,6 +45,23 @@ impl Matrix {
             print!("{} ", self.numbers[i]);
         }
         println!();
+    }
+}
+
+impl PartialEq<Matrix> for Matrix {
+    fn eq(&self, other: &Matrix) -> bool {
+        if self.n != other.n || self.m != other.m {
+            return false;
+        }
+        if self.numbers.len() != other.numbers.len() {
+            return false;
+        }
+        for i in 0..self.numbers.len() {
+            if self.numbers[i] != other.numbers[i] {
+                return false;
+            }
+        }
+        true
     }
 }
 
@@ -202,5 +219,13 @@ mod tests {
         assert_eq!(m.numbers[1], Complex::from_float(0.0));
         assert_eq!(m.numbers[2], Complex::from_float(0.0));
         assert_eq!(m.numbers[3], Complex::from_float(1.0));
+    }
+    #[test]
+    fn equal() {
+        let m = Matrix::identity(2);
+        let m1 = Matrix::identity(3);
+        let m2 = m.clone();
+        assert_ne!(m, m1);
+        assert_eq!(m, m2);
     }
 }
