@@ -1,16 +1,16 @@
 use std::ops;
 
-use super::matrix_allowed::MatrixAllowed as Allowed;
+use super::complex::Complex;
 
 #[derive(Debug)]
 pub struct Matrix {
     pub m: usize,
     pub n: usize,
-    pub numbers: Vec<Allowed>,
+    pub numbers: Vec<Complex>,
 }
 
 impl Matrix {
-    pub fn new(n: usize, m: usize, numbers: Vec<Allowed>) -> Result<Self, &'static str> {
+    pub fn new(n: usize, m: usize, numbers: Vec<Complex>) -> Result<Self, &'static str> {
         if n * m != numbers.len() {
             return Err("The number of elements does not match the matrix dimensions");
         }
@@ -36,7 +36,7 @@ impl ops::Add<Matrix> for Matrix {
         }
         let mut numbers = vec![];
         for i in 0..self.n * self.m {
-            numbers.push(todo!());
+            numbers.push(other.numbers[i] + self.numbers[i]);
         }
         Ok(Matrix {
             n: self.n,
@@ -59,10 +59,10 @@ mod tests {
             2,
             2,
             vec![
-                Allowed::Float(3.0),
-                Allowed::Float(3.0),
-                Allowed::Float(4.0),
-                Allowed::Complex(c),
+                Complex::from_float(2.0),
+                Complex::from_float(5.0),
+                c,
+                Complex::from_float(9.0),
             ],
         );
         match m {

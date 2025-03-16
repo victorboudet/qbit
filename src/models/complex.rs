@@ -10,6 +10,9 @@ impl Complex {
     pub fn new(real: f64, imag: f64) -> Self {
         Self { real, imag }
     }
+    pub fn from_float(real: f64) -> Self {
+        Self { real, imag: 0.0 }
+    }
     pub fn conjugate(self) -> Complex {
         Complex::new(self.real, -self.imag)
     }
@@ -20,11 +23,7 @@ impl Complex {
         (self.imag / self.real).atan()
     }
     pub fn dump(&self) {
-        if self.imag < 0.0 {
-            println!("{} - {}i", self.real, -self.imag);
-        } else {
-            println!("{} + {}i", self.real, self.imag);
-        }
+        println!("{}", self);
     }
 }
 
@@ -62,6 +61,12 @@ impl ops::Mul for Complex {
 
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        if self.imag == 0.0 {
+            return write!(f, "{}", self.real);
+        }
+        if self.imag < 0.0 {
+            return write!(f, "{} - {}i", self.real, -self.imag);
+        }
         write!(f, "{} + {}i", self.real, self.imag)
     }
 }
