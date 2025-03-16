@@ -105,7 +105,7 @@ mod tests {
         let c = Complex::new(0.0, 1.0);
         assert_eq!(c.theta(), PI / 2.0);
         let c = Complex::new(1.0, 0.0);
-        assert_eq!(c.theta(), 0.0)
+        assert_eq!(c.theta(), 0.0);
     }
 
     #[test]
@@ -131,7 +131,7 @@ mod tests {
         let c2 = Complex::new(4.0, -8.0);
         let res = c1 * c2;
         assert_eq!(res.real, 32.0);
-        assert_eq!(res.imag, -4.0)
+        assert_eq!(res.imag, -4.0);
     }
     #[test]
     fn mul_conjugate() {
@@ -139,6 +139,6 @@ mod tests {
         let c2 = c1.clone().conjugate();
         let res = c1 * c2;
         assert_eq!(res.real, 13.0);
-        assert_eq!(res.imag, 0.0)
+        assert_eq!(res.imag, 0.0);
     }
 }
