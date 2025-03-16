@@ -60,13 +60,9 @@ impl ops::Mul for Matrix {
         let mut numbers = vec![];
         for i in 0..self.n {
             for j in 0..other.m {
-                let mut vec = vec![];
                 let mut res = Complex::from_float(0.0);
                 for k in 0..self.m {
-                    vec.push(self.numbers[i * self.m + k]);
-                }
-                for k in 0..other.n {
-                    res = vec[k] * other.numbers[k * other.m + j] + res;
+                    res = self.numbers[i * self.m + k] * other.numbers[k * other.m + j] + res;
                 }
                 numbers.push(res);
             }
@@ -135,7 +131,7 @@ mod tests {
             ],
         )
         .expect("It will work");
-        let m3 = (m2 * m1).expect("It should be ok");
+        let m3 = (m1 * m2).expect("It should be ok");
         m3.dump();
     }
 }
