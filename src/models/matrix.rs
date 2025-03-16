@@ -16,6 +16,23 @@ impl Matrix {
         }
         Ok(Self { n, m, numbers })
     }
+
+    pub fn identity(size: usize) -> Matrix {
+        let mut numbers = vec![];
+        for i in 0..size * size {
+            if i % (size + 1) == 0 {
+                numbers.push(Complex::from_float(1.0));
+                continue;
+            }
+            numbers.push(Complex::from_float(0.0));
+        }
+        Matrix {
+            n: size,
+            m: size,
+            numbers,
+        }
+    }
+
     pub fn dump(&self) {
         if self.numbers.is_empty() {
             println!("Empty matrix");
@@ -176,5 +193,14 @@ mod tests {
         assert_eq!(m1.numbers[3], Complex::from_float(20.0));
         assert_eq!(m1.numbers[4], Complex::from_float(22.0));
         assert_eq!(m1.numbers[5], Complex::from_float(24.0));
+    }
+
+    #[test]
+    fn identity() {
+        let m = Matrix::identity(2);
+        assert_eq!(m.numbers[0], Complex::from_float(1.0));
+        assert_eq!(m.numbers[1], Complex::from_float(0.0));
+        assert_eq!(m.numbers[2], Complex::from_float(0.0));
+        assert_eq!(m.numbers[3], Complex::from_float(1.0));
     }
 }
